@@ -4,6 +4,8 @@ import NodeEnvironment from 'jest-environment-node'
 const path = require('path')
 const os = require('os')
 const fs = require('fs')
+import { JSDOM } from 'jsdom'
+import 'jsdom-global/register'
 
 const DIR = path.join(os.tmpdir(), 'jest_puppeteer_global_setup')
 
@@ -23,6 +25,10 @@ class PuppeteerEnvironment extends NodeEnvironment {
             browserWSEndpoint: wsEndpoint,
             defaultViewport: { width: 1920, height: 1080 },
         })
+
+        const doc = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`)
+        global.document = doc.window.document
+        global.window = doc.window as any
     }
 
     async teardown() {

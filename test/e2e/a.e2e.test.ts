@@ -20,10 +20,12 @@ describe('/ (Home Page)', () => {
         const text = await page.evaluate(() => document.body.textContent)
 
         for (let i = 0; i < 100; i++) {
+            await page.waitForSelector('#test_id')
             await page.click('#test_id')
         }
 
-        expect(text).toContain('Reactcount')
+        await page.waitForSelector('#test_id')
+        expect(text).toContain(' Loading')
     })
 
     test('Take screenshot of home pag', async () => {

@@ -10,10 +10,12 @@ export default {
     globalSetup: './test/setup.ts',
     globalTeardown: './test/teardown.ts',
     testEnvironment: './test/puppeteer_environment.ts',
-    // testEnvironment: "node",
+    // testEnvironment: 'jsdom',
     roots: ['<rootDir>'],
     transform: {
         '^.+\\.tsx.?$': 'ts-jest',
+        '^.+\\.svg$': 'jest-transform-stub',
+        '.+\\.(css|styl|less|sass|scss)$': 'jest-css-modules-transform',
     },
     moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx'],
     testPathIgnorePatterns: ['/node_modules/', 'src/types'],
@@ -23,11 +25,15 @@ export default {
     collectCoverage: true,
     collectCoverageFrom: ['src/**/*.{js,jsx,ts,tsx}', 'test/**/*.test.ts', '!**/node_modules/**', '!src/*.d.ts'],
     moduleNameMapper: {
-        '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/__mocks__/fileMock.js',
-        '\\.(css|less|scss)$': '<rootDir>/__mocks__/styleMock.js',
-        '^react$': 'preact-compat',
+        // '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$': '<rootDir>/__mocks__/fileMock.js',
+        // '\\.(css|less|scss)$': '<rootDir>/__mocks__/styleMock.js',
+        // '^react$': 'preact-compat',
+        '^assets/(.*)$': ['<rootDir>/assets/$1'],
+        '^src/(.*)$': '<rootDir>/src/$1',
+        '^.+.(svg|png|jpg)$': 'jest-transform-stub',
         '^react-dom$': 'preact-compat',
     },
+    // setupFilesAfterEnv: ['<rootDir>/test/enzyme.ts'],
     // coverageThreshold: {
     //   global: {
     //     branches: 80,
